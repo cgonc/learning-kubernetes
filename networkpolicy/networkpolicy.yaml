@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"NetworkPolicy","metadata":{"annotations":{},"name":"payroll-policy","namespace":"default"},"spec":{"ingress":[{"from":[{"podSelector":{"matchLabels":{"name":"internal"}}}],"ports":[{"port":8080,"protocol":"TCP"}]}],"podSelector":{"matchLabels":{"name":"payroll"}},"policyTypes":["Ingress"]}}
+  name: payroll-policy
+  namespace: default
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              name: internal
+      ports:
+        - port: 8080
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      name: payroll
+  policyTypes:
+    - Ingress
